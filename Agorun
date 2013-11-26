@@ -1,5 +1,4 @@
 #!/usr/bin/env 9 rc
-# /Users/korvin/apps/plan9port/bin/rc
 
 . 9.rc
 dir=acme/acme/$winid
