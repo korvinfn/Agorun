@@ -8,11 +8,19 @@ fn rd {
 }
 
 tag=`{rd tag}
-if(! ~ $tag(1) */){
-	echo window $tag(1) is not a directory >[1=2]
-	exit 'not a directory'
+if(~ $tag(1) */){
+	cd $tag(1)
+	go build -o go.out && ./go.out && rm go.out
 }
-
-cd $tag(1)
-go build -o go.out && ./go.out && rm go.out
-
+if not {
+	if(~ $tag(1) *.go){
+		file=`{basename $tag(1)}
+		dir1=`{dirname $tag(1)}
+		cd $dir1
+		go run $file
+	}
+	if not {
+		echo window $tag(1) is not a directory or Go source file >[1=2]
+        exit 'not a directory or Go source file'
+	}
+}
